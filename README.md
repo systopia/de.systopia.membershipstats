@@ -1,4 +1,5 @@
-# CiviCRM Membership Statistics Extension (de.systopia.membershipstats)
+# CiviCRM Membership Statistics Extension 
+## (de.systopia.membershipstats)
 
 This extension creates a small custom field set with each contact that reflects its current membership status. This allows you to access this information more easily, e.g. in reporting.
 
