@@ -72,7 +72,6 @@ class CRM_Membershipstats_Calculator {
    * Update membership stats for a given contact
    */
   public function update($contact_id) {
-    error_log("UPDATING $contact_id");
     $contact_id = (int) $contact_id;
     if ($contact_id < 1) return;
 
