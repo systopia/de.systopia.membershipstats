@@ -90,7 +90,7 @@ function membershipstats_civicrm_uninstall() {
 function membershipstats_civicrm_enable() {
   // update stats for all contacts
   require_once 'membershipstats.customgroup.php';
-  require_once 'CRM/membershipstats/Calculator.php';
+  require_once 'CRM/Membershipstats/Calculator.php';
   $calculator = new CRM_Membershipstats_Calculator();
   $calculator->updateAll();
 
