@@ -15,6 +15,7 @@ define('CIVICRM_MEMBERSHIPSTATS_TABLE',        'civicrm_value_membershipstats');
 define('CIVICRM_MEMBERSHIPSTATS_CURRENT',      'membership_current');
 define('CIVICRM_MEMBERSHIPSTATS_CURRENT_TYPE', 'membership_current_type');
 define('CIVICRM_MEMBERSHIPSTATS_MEMBER_SINCE', 'membership_member_since');
+define('CIVICRM_MEMBERSHIPSTATS_END_DATE',     'membership_end_date');
 
 /**
  * Implements the POST hook:

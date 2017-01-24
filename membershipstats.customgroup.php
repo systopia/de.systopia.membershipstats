@@ -96,6 +96,27 @@ function membershipstats_create_customgroup() {
     ));
   }
 
+  // CREATE MEMBERSHIP END DATE FIELD
+  $fieldsearch = civicrm_api3('CustomField', 'getcount', array('column_name' => CIVICRM_MEMBERSHIPSTATS_END_DATE, 'custom_group_id' => $custom_group_id));
+  if (empty($fieldsearch)) {
+    // doesn't exist:
+    $test = civicrm_api3('CustomField', 'create', array(
+      'name'                 => 'Member_End_Date',
+      'label'                => 'Membership End Date',
+      'custom_group_id'      => $custom_group_id,
+      'column_name'          => CIVICRM_MEMBERSHIPSTATS_END_DATE,
+      'data_type'            => 'Date',
+      'html_type'            => 'Select Date',
+      'default_value'        => 'NULL',
+      'is_required'          => '0',
+      'is_searchable'        => '1',
+      'is_search_range'      => '0',
+      'is_view'              => '1',
+      'is_active'            => '1',
+      'date_format'          => 'yy-mm-dd',
+    ));
+  }
+
   // // CREATE MEMBER FOR FIELD
   // $fieldsearch = civicrm_api3('CustomField', 'getcount', array('column_name' => CIVICRM_MEMBERSHIPSTATS_MEMBER_FOR, 'custom_group_id' => $custom_group_id));
   // if (empty($fieldsearch)) {

@@ -25,6 +25,7 @@ class CRM_Membershipstats_Calculator {
   protected $current_member_field       = NULL; // to be set
   protected $current_member_type_field  = NULL; // to be set
   protected $member_since_field         = NULL; // to be set
+  protected $membership_end_date_field  = NULL; // to be set
 
   /**
    * Init calculator, e.g. look up some values
@@ -60,12 +61,15 @@ class CRM_Membershipstats_Calculator {
         case CIVICRM_MEMBERSHIPSTATS_MEMBER_SINCE:
           $this->member_since_field = 'custom_' . $field['id'];
           break;
+        case CIVICRM_MEMBERSHIPSTATS_END_DATE:
+          $this->membership_end_date_field = 'custom_' . $field['id'];
+          break;
         default:
           break;
       }
     }
 
-    $this->custom_field_list = implode(',', array($this->current_member_field, $this->current_member_type_field, $this->member_since_field));
+    $this->custom_field_list = implode(',', array($this->current_member_field, $this->current_member_type_field, $this->member_since_field, $this->membership_end_date_field));
   }
 
   /**
@@ -91,7 +95,8 @@ class CRM_Membershipstats_Calculator {
     // then extract data by iterating through memberships
     $current_member      = 0;
     $current_member_type = '';
-    $member_since        = NULL;
+    $member_since        = '';
+    $member_end_date     = '';
 
     foreach ($memberships['values'] as $membership) {
       // update current_member
@@ -106,6 +111,19 @@ class CRM_Membershipstats_Calculator {
           } elseif ($current_member_type != $membership['membership_name']) {
             $current_member_type = 'Multiple';
           }
+        }
+
+        // update membership end date
+        if (!empty($membership['end_date'])) {
+          $end_date = substr($membership['end_date'], 0, 10);
+          if ($member_end_date == NULL) {
+            $member_end_date = $end_date;
+          } elseif ($member_end_date < $end_date) {
+            $member_end_date = $end_date;
+          }
+        } else {
+          // no end date set -> set dummy:
+          $member_end_date = '2099-12-31';
         }
       }
 
@@ -128,16 +146,21 @@ class CRM_Membershipstats_Calculator {
 
     // compile update
     $update = array();
-    if ($current_data[$this->current_member_field] != $current_member) {
+
+    if (CRM_Utils_Array::value($this->current_member_field, $current_data) != $current_member) {
       $update[$this->current_member_field] = $current_member;
     }
 
-    if ($current_data[$this->current_member_type_field] != $current_member_type) {
+    if (CRM_Utils_Array::value($this->current_member_type_field, $current_data) != $current_member_type) {
       $update[$this->current_member_type_field] = $current_member_type;
     }
 
-    if (substr($current_data[$this->member_since_field], 0, 10) != $member_since) {
+    if (substr(CRM_Utils_Array::value($this->member_since_field, $current_data), 0, 10) != $member_since) {
       $update[$this->member_since_field] = $member_since;
+    }
+    
+    if (substr(CRM_Utils_Array::value($this->membership_end_date_field, $current_data), 0, 10) != $member_end_date) {
+      $update[$this->membership_end_date_field] = $member_end_date;
     }
 
     // If there is something to update, store new values
