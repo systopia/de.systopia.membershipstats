@@ -112,19 +112,19 @@ class CRM_Membershipstats_Calculator {
             $current_member_type = 'Multiple';
           }
         }
+      }
 
-        // update membership end date
-        if (!empty($membership['end_date'])) {
-          $end_date = substr($membership['end_date'], 0, 10);
-          if ($member_end_date == NULL) {
-            $member_end_date = $end_date;
-          } elseif ($member_end_date < $end_date) {
-            $member_end_date = $end_date;
-          }
-        } else {
-          // no end date set -> set dummy:
-          $member_end_date = '2099-12-31';
+      // update membership end date
+      if (!empty($membership['end_date'])) {
+        $end_date = substr($membership['end_date'], 0, 10);
+        if ($member_end_date == NULL) {
+          $member_end_date = $end_date;
+        } elseif ($member_end_date < $end_date) {
+          $member_end_date = $end_date;
         }
+      } else {
+        // no end date set -> set dummy:
+        $member_end_date = '2099-12-31';
       }
 
       // update member_since
