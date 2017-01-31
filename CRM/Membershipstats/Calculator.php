@@ -181,6 +181,6 @@ class CRM_Membershipstats_Calculator {
     }
 
     // secondly: delete stats entry for contacts that don't have a membership entity (any more)
-    CRM_Core_DAO::executeQuery("DELETE FROM `{$this->membershipstats_table}` WHERE entity_id IN (SELECT civicrm_contact.id FROM civicrm_contact LEFT JOIN civicrm_membership ON civicrm_membership.contact_id = civicrm_contact.id WHERE civicrm_membership.id IS NULL);");
+    CRM_Core_DAO::executeQuery("DELETE FROM `civicrm_value_membershipstats` WHERE entity_id NOT IN (SELECT contact_id FROM `civicrm_membership`);");
   }
 }
