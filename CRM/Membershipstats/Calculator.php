@@ -31,6 +31,9 @@ class CRM_Membershipstats_Calculator {
    * Init calculator, e.g. look up some values
    */
   public function __construct() {
+    // restrict to memberships?
+    $this->membership_types = CRM_Membershipstats_Form_Settings::getSelectedMembershipTypeIDs();
+
     $this->active_status_ids = array();
     $statuses = civicrm_api3('MembershipStatus', 'get', array(
       'is_current_member' => '1',
