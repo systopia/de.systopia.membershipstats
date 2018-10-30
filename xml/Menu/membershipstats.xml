@@ -5,5 +5,7 @@
     <page_callback>CRM_Membershipstats_Form_Settings</page_callback>
     <title>Settings</title>
     <access_arguments>access CiviCRM</access_arguments>
+    <adminGroup>CiviMember</adminGroup>
+    <icon>admin/small/online_contribution_pages.png</icon>
   </item>
 </menu>
